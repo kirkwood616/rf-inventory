@@ -11,8 +11,6 @@ interface Props {
 }
 
 function CalculatedOrder({ calculatedOrder, isCalculated, setIsCalculated }: Props) {
-  console.log(calculatedOrder);
-
   return (
     <div className={isCalculated ? "CalculatedOrder" : "CalculatedOrder hidden"}>
       <p>CALCULATED ORDER:</p>
@@ -24,6 +22,10 @@ function CalculatedOrder({ calculatedOrder, isCalculated, setIsCalculated }: Pro
               {formatFirstLettersToUpperCase(item)}: {calculatedOrder[item]}
             </div>
           ))}
+          <div className="buttons">
+            <Button text={"EDIT"} backgroundColor={"blue"}></Button>
+            <Button text={"SAVE"} backgroundColor={"green"}></Button>
+          </div>
           <Button text={"CLOSE"} backgroundColor={"red"} onClick={() => setIsCalculated(false)} />
         </>
       )}

@@ -13,3 +13,11 @@
   filter: blur(5px);
   left: -100%;
 }
+
+.CalculatedOrder > .buttons {
+  margin: 0.5rem auto;
+  width: 400px;
+}
+.CalculatedOrder > .buttons :first-child {
+  margin-bottom: 0.5rem;
+}

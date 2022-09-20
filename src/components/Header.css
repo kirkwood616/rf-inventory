@@ -1,5 +1,6 @@
 .Header {
-  background-color: yellow;
+  background-color: white;
+  box-shadow: 0 4px 5px rgb(0, 0, 0, 20%);
   position: fixed;
   top: 0;
   width: 100%;

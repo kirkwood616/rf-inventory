@@ -171,8 +171,8 @@ function InventoryOnHand() {
   // RENDER
   return (
     <div className="InventoryOnHand">
-      <p>{date.toDateString()}</p>
-      <p>ON HAND:</p>
+      <h1>INVENTORY ON HAND</h1>
+      <h2>{date.toDateString()}</h2>
       <div className="on-hand">
         {Object.keys(todayOrder).map((key, index) => (
           <div className="on-hand__itemContainer" key={index + key}>
