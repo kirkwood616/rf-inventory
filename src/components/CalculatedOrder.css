@@ -1,0 +1,15 @@
+.CalculatedOrder {
+  background-color: lightgrey;
+  height: 100%;
+  left: 0;
+  filter: blur(0);
+  position: absolute;
+  top: 0;
+  transition: all 0.5s ease-in-out;
+  width: 100%;
+}
+
+.hidden {
+  filter: blur(5px);
+  left: -100%;
+}

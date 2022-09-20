@@ -1,0 +1,41 @@
+.InventoryOnHand {
+  margin-top: 5rem;
+}
+
+.InventoryOnHand,
+.InventoryOnHand input {
+  font-size: 1rem;
+}
+
+.InventoryOnHand input {
+  border: 1px solid black;
+  border-radius: 0.25rem;
+  box-shadow: 1px 1px 5px rgb(0, 0, 0, 40%);
+  padding: 0.25rem;
+  text-align: center;
+  width: 50%;
+}
+.InventoryOnHand input::-webkit-outer-spin-button,
+.InventoryOnHand input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.InventoryOnHand input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.InventoryOnHand .on-hand {
+  box-shadow: 0px 0px 10px 0 rgb(0, 0, 0, 40%);
+  border-radius: 1rem;
+  margin: auto;
+  max-width: 300px;
+  padding: 1rem;
+}
+
+.InventoryOnHand .on-hand > .on-hand__itemContainer {
+  margin-bottom: 0.75rem;
+}
+
+.InventoryOnHand .on-hand__itemName {
+  font-weight: bold;
+}
