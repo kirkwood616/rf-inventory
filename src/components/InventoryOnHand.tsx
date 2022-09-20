@@ -167,6 +167,7 @@ function InventoryOnHand() {
     setCalculatedOrder(orderAmmounts);
     setIsCalculated(true);
   }
+  console.log(todayOrder);
 
   // RENDER
   return (
@@ -182,7 +183,7 @@ function InventoryOnHand() {
             <div className="on-hand__itemValue">
               <input
                 type="number"
-                value={todayOrder[key]}
+                placeholder={"0"}
                 min={0}
                 max={30}
                 onChange={(e) => setTodayOrder(addToTodayOrder(todayOrder, key, e))}

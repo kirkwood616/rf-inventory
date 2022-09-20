@@ -10,21 +10,15 @@
 .InventoryOnHand input {
   border: 1px solid black;
   border-radius: 0.25rem;
-  box-shadow: 1px 1px 5px rgb(0, 0, 0, 40%);
+  box-shadow: 0px 1px 5px rgb(0, 0, 0, 40%);
+  font-weight: bold;
   padding: 0.25rem;
   text-align: center;
   width: 50%;
 }
-.InventoryOnHand input::-webkit-outer-spin-button,
-.InventoryOnHand input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.InventoryOnHand input[type="number"] {
-  -moz-appearance: textfield;
-}
 
 .InventoryOnHand .on-hand {
+  background-color: white;
   box-shadow: 0px 0px 10px 0 rgb(0, 0, 0, 40%);
   border-radius: 1rem;
   margin: auto;
