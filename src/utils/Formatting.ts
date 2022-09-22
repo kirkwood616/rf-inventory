@@ -1,3 +1,5 @@
+import { InventoryItemOrder } from "../models/Inventory";
+
 export function formatFirstLettersToUpperCase(string: string) {
   if (string.includes(" ")) {
     let splitArray = string.split(" ");
@@ -19,5 +21,15 @@ export function formatAppendedClassName(string: string) {
     return splitArray.join("");
   } else {
     return string[0].toUpperCase() + string.substring(1);
+  }
+}
+
+export function formatHouseNameOrderName(orderItem: InventoryItemOrder) {
+  if (orderItem.houseName === orderItem.orderName) {
+    return formatFirstLettersToUpperCase(orderItem.houseName);
+  } else {
+    const houseName = formatFirstLettersToUpperCase(orderItem.houseName);
+    const orderName = formatFirstLettersToUpperCase(orderItem.orderName);
+    return `${houseName} (${orderName})`;
   }
 }
