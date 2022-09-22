@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { DayNumbers, InventoryData, InventoryValues } from "../models/Inventory";
+import { DayNumbers, InventoryData, InventoryItemOrder } from "../models/Inventory";
 import { formatAppendedClassName, formatFirstLettersToUpperCase } from "../utils/Formatting";
 import Button from "./Button";
 import CalculatedOrder from "./CalculatedOrder";
@@ -127,8 +127,8 @@ const inventoryData: InventoryData[] = [
 
 function InventoryOnHand() {
   // STATE
-  const [todayOrder, setTodayOrder] = useState(newOrderState);
-  const [calculatedOrder, setCalculatedOrder] = useState<InventoryValues | undefined>();
+  const [onHand, setOnHand] = useState<InventoryItemOrder[]>(newOnHandState);
+  const [calculatedOrder, setCalculatedOrder] = useState<InventoryItemOrder[] | undefined>();
   const [isCalculated, setIsCalculated] = useState(false);
 
   // TODO: get date from server... don't trust client
@@ -136,38 +136,41 @@ function InventoryOnHand() {
   const day = date.getDay() as DayNumbers;
 
   // FUNCTIONS
-  function newOrderState(): InventoryValues {
-    let newOrderState = {} as InventoryValues;
-    for (let i = 0; i < inventoryData.length; i++) {
-      newOrderState = { ...newOrderState, [inventoryData[i].houseName]: 0 };
-    }
+  function newOnHandState(): InventoryItemOrder[] {
+    const newOrderState: InventoryItemOrder[] = inventoryData.map((item) => {
+      return {
+        houseName: item.houseName,
+        orderName: item.orderName,
+        quantity: 0,
+      };
+    });
     return newOrderState;
   }
 
-  function addToTodayOrder(state: InventoryValues, key: string, e: ChangeEvent<HTMLInputElement>): InventoryValues {
-    const newTodayOrderState: InventoryValues = { ...state, [key]: Number(e.currentTarget.value) };
+  function addToOnHand(houseName: string, e: ChangeEvent<HTMLInputElement>) {
+    const newTodayOrderState: InventoryItemOrder[] = onHand.map((obj) => {
+      if (obj.houseName === houseName) {
+        return { ...obj, quantity: Number(e.target.value) };
+      } else {
+        return { ...obj };
+      }
+    });
     return newTodayOrderState;
   }
 
-  function calculateOrderAmmounts(state: InventoryValues) {
-    let inventoryNeeded = {} as InventoryValues;
-    for (let i = 0; i < inventoryData.length; i++) {
-      inventoryNeeded = { ...inventoryNeeded, [inventoryData[i].houseName]: inventoryData[i].inventoryOrderByDay[day] };
-    }
-
-    let orderAmmounts = {} as InventoryValues;
-    for (const [key, value] of Object.entries(state)) {
-      if (value < inventoryNeeded[key]) {
-        orderAmmounts = { ...orderAmmounts, [key]: inventoryNeeded[key] - value };
+  function calculateOrderAmmounts() {
+    const inventoryNeeded: InventoryItemOrder[] = onHand.map((item, index) => {
+      const inventoryDataItem = inventoryData.find((dataItem) => dataItem.houseName === item.houseName);
+      if (!inventoryDataItem) return item;
+      if (item.quantity < inventoryData[index].inventoryOrderByDay[day]) {
+        return { ...item, quantity: inventoryDataItem.inventoryOrderByDay[day] - onHand[index].quantity };
       } else {
-        orderAmmounts = { ...orderAmmounts, [key]: 0 };
+        return { ...item, quantity: 0 };
       }
-    }
-
-    setCalculatedOrder(orderAmmounts);
+    });
+    setCalculatedOrder(inventoryNeeded);
     setIsCalculated(true);
   }
-  console.log(todayOrder);
 
   // RENDER
   return (
@@ -175,26 +178,23 @@ function InventoryOnHand() {
       <h1>INVENTORY ON HAND</h1>
       <h2>{date.toDateString()}</h2>
       <div className="on-hand">
-        {Object.keys(todayOrder).map((key, index) => (
-          <div className="on-hand__itemContainer" key={index + key}>
-            <label htmlFor={`onHandValue${formatAppendedClassName(key)}`}>
-              <div className="on-hand__itemName">{formatFirstLettersToUpperCase(key) + ":"}</div>
-            </label>
+        {onHand.map((item, index) => (
+          <div className="on-hand__itemContainer" key={index + item.houseName}>
+            <div className="on-hand__itemName">{formatFirstLettersToUpperCase(item.houseName) + ":"}</div>
             <div className="on-hand__itemValue">
               <input
                 type="number"
                 placeholder={"0"}
                 min={0}
                 max={30}
-                onChange={(e) => setTodayOrder(addToTodayOrder(todayOrder, key, e))}
-                id={`onHandValue${formatAppendedClassName(key)}`}
+                onChange={(e) => setOnHand(addToOnHand(item.houseName, e))}
+                id={`onHandValue${formatAppendedClassName(item.houseName)}`}
               />
             </div>
           </div>
         ))}
-        <Button text={"CALCULATE ORDER"} backgroundColor={"green"} onClick={() => calculateOrderAmmounts(todayOrder)} />
+        <Button text={"CALCULATE ORDER"} backgroundColor={"green"} onClick={() => calculateOrderAmmounts()} />
       </div>
-
       <CalculatedOrder calculatedOrder={calculatedOrder} isCalculated={isCalculated} setIsCalculated={setIsCalculated} />
     </div>
   );
