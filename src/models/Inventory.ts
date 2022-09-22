@@ -15,3 +15,9 @@ export interface InventoryData {
   orderName: string;
   inventoryOrderByDay: DayInventory;
 }
+
+export interface InventoryItemOrder {
+  houseName: string;
+  orderName: string;
+  quantity: number;
+}
