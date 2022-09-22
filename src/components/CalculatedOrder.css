@@ -1,12 +1,12 @@
 .CalculatedOrder {
   background-color: lightgrey;
-  height: 100%;
-  left: 0;
   filter: blur(0);
-  position: absolute;
+  height: 100vh;
+  left: 0;
+  position: fixed;
   top: 0;
   transition: all 0.5s ease-in-out;
-  width: 100%;
+  width: 100vw;
 }
 
 .hidden {
@@ -14,10 +14,14 @@
   left: -100%;
 }
 
-.CalculatedOrder > .buttons {
-  margin: 0.5rem auto;
-  width: 400px;
+.calculated-order {
+  margin: auto;
+  width: 90%;
 }
-.CalculatedOrder > .buttons :first-child {
+.calculated-order > .calculated-order__buttons {
+  width: 50%;
+  margin: 0.5rem auto;
+}
+.calculated-order > .calculated-order__buttons button {
   margin-bottom: 0.5rem;
 }
