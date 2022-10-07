@@ -11,6 +11,7 @@ export type InventoryValues = {
 };
 
 export interface InventoryData {
+  sort_id: number;
   houseName: string;
   orderName: string;
   inventoryOrderByDay: DayInventory;

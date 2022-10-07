@@ -1,4 +1,4 @@
-.CalculatedOrder {
+.GeneratedOrder {
   background-color: lightgrey;
   filter: blur(0);
   height: 100vh;
@@ -15,7 +15,7 @@
   left: -200%;
 }
 
-.calculated-order {
+.generated-order {
   margin: auto;
   width: 75%;
   background-color: whitesmoke;
@@ -24,7 +24,7 @@
   overflow: hidden;
   padding: 1rem;
 }
-.calculated-order .calculated-order__itemContainer {
+.generated-order .generated-order__itemContainer {
   border-radius: 1rem;
   box-shadow: 0 5px 10px rgb(0, 0, 0, 30%);
   font-weight: bold;
@@ -32,15 +32,15 @@
   padding: 0.5rem;
   width: 75%;
 }
-.calculated-order .calculated-order__name {
+.generated-order .generated-order__name {
   background-color: lightblue;
   border-radius: 0.75rem;
   margin-bottom: 0.5rem;
   padding: 0.5rem;
 }
-.calculated-order > .calculated-order__buttons {
+.generated-order > .generated-order__buttons {
   margin: 0.5rem auto;
 }
-.calculated-order > .calculated-order__buttons button {
+.generated-order > .generated-order__buttons button {
   margin-bottom: 0.5rem;
 }

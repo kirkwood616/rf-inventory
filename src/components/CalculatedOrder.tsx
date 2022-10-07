@@ -2,32 +2,41 @@ import { Dispatch, SetStateAction } from "react";
 import { InventoryItemOrder } from "../models/Inventory";
 import { formatHouseNameOrderName } from "../utils/Formatting";
 import Button from "./Button";
-import "./CalculatedOrder.css";
+// import "./CalculatedOrder.css";
 
 interface Props {
   calculatedOrder: InventoryItemOrder[] | undefined;
   isCalculated: boolean;
-  setIsCalculated: Dispatch<SetStateAction<boolean>>;
+  isEditActive: boolean;
+  setIsEditActive: Dispatch<SetStateAction<boolean>>;
+  setEditedOrder: Dispatch<SetStateAction<InventoryItemOrder[] | undefined>>;
 }
 
-function CalculatedOrder({ calculatedOrder, isCalculated, setIsCalculated }: Props) {
+function CalculatedOrder({ calculatedOrder, isCalculated, isEditActive, setIsEditActive, setEditedOrder }: Props) {
+  // FUNCTIONS
+  function onEditCalculated() {
+    setEditedOrder(calculatedOrder);
+    setIsEditActive((current) => !current);
+  }
+
+  // RENDER
+  if (!calculatedOrder) return <>Oops!</>;
   return (
     <div className={isCalculated ? "CalculatedOrder" : "CalculatedOrder hidden"}>
-      <h1>CALCULATED ORDER</h1>
-      {!calculatedOrder && <></>}
       {calculatedOrder && (
-        <div className="calculated-order">
+        <div className="generated-order">
           {calculatedOrder.map((item, index) => (
-            <div className="calculated-order__itemContainer" key={item.houseName + index}>
-              <div className="calculated-order__name">{formatHouseNameOrderName(item)}:</div>
-              <div className="calculated-order__quantity">{item.quantity}</div>
+            <div className="generated-order__itemContainer" key={item.houseName + index}>
+              <div className="generated-order__name">{formatHouseNameOrderName(item)}:</div>
+              <div className="generated-order__quantity">{item.quantity}</div>
             </div>
           ))}
-          <div className="calculated-order__buttons">
-            <Button text={"EDIT QUANTITIES"} backgroundColor={"blue"}></Button>
-            <Button text={"PLACE ORDER"} backgroundColor={"green"}></Button>
+
+          <div className="generated-order__buttons">
+            <Button text={"PLACE ORDER"} backgroundColor={"green"} onClick={() => console.log(calculatedOrder)} />
+
+            {!isEditActive && <Button text={"EDIT QUANTITIES"} backgroundColor={"blue"} onClick={onEditCalculated} />}
           </div>
-          <Button text={"CLOSE"} backgroundColor={"red"} onClick={() => setIsCalculated(false)} />
         </div>
       )}
     </div>
